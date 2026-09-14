@@ -9,7 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "appwrite": "^27.0.0",
     "next": "16.3.5",
+    "node-appwrite": "^29.0.0",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },
@@ -23,5 +25,8 @@
     "eslint-config-next": "16.3.5",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "allowScripts": {
+    "node-appwrite@29.0.0": true
   }
 }
