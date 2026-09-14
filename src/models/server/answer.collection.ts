@@ -1,35 +1,46 @@
 import { Permission } from "node-appwrite";
 import { answerCollection, db } from "../name";
-import { databases } from "./config";
+import { tablesDB } from "./config";
 
 export default async function createAnswerCollection() {
   // Creating Collection
-  await databases.createCollection(db, answerCollection, answerCollection, [
-    Permission.create("users"),
-    Permission.read("any"),
-    Permission.read("users"),
-    Permission.update("users"),
-    Permission.delete("users"),
-  ]);
+  await tablesDB.createTable({
+    databaseId: db,
+    tableId: answerCollection,
+    name: answerCollection,
+    permissions: [
+      Permission.create("users"),
+      Permission.read("any"),
+      Permission.read("users"),
+      Permission.update("users"),
+      Permission.delete("users"),
+    ],
+  });
   console.log("Answer Collection Created");
 
   // Creating Attributes
   await Promise.all([
-    databases.createStringAttribute(
-      db,
-      answerCollection,
-      "content",
-      10000,
-      true,
-    ),
-    databases.createStringAttribute(
-      db,
-      answerCollection,
-      "questionId",
-      50,
-      true,
-    ),
-    databases.createStringAttribute(db, answerCollection, "authorId", 50, true),
+    tablesDB.createStringColumn({
+      databaseId: db,
+      tableId: answerCollection,
+      key: "content",
+      size: 10000,
+      required: true,
+    }),
+    tablesDB.createStringColumn({
+      databaseId: db,
+      tableId: answerCollection,
+      key: "questionId",
+      size: 50,
+      required: true,
+    }),
+    tablesDB.createStringColumn({
+      databaseId: db,
+      tableId: answerCollection,
+      key: "authorId",
+      size: 50,
+      required: true,
+    }),
   ]);
   console.log("Answer Attributes Created");
 }
